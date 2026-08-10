@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://registry.ojcp.dev/schema/registry-entry.schema.json",
+  "title": "OJCP Registry Entry",
+  "description": "One listed OJCP provider. One file per provider at providers/<domain>.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["domain", "name", "manifest_url", "trust_tier", "added_at"],
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "The provider's primary domain (host only, no scheme or path). Must match the filename.",
+      "pattern": "^[a-z0-9.-]+\\.[a-z]{2,}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable provider name (from the manifest's provider.name)."
+    },
+    "manifest_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the provider's OJCP manifest. MUST be https://<domain>/.well-known/ojcp.json."
+    },
+    "trust_tier": {
+      "type": "string",
+      "enum": ["unverified", "verified", "audited"],
+      "description": "Registry trust tier. New listings start at 'unverified'. Promotion follows the spec's Registry Trust Tiers and is granted by reviewed PR."
+    },
+    "manifest_signed": {
+      "type": "boolean",
+      "description": "Whether the provider's manifest carries a valid signature at listing time."
+    },
+    "domain_control": {
+      "type": "object",
+      "description": "How control of the domain was proven before listing.",
+      "additionalProperties": false,
+      "required": ["method"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["signed_manifest", "dns_txt"],
+          "description": "'signed_manifest' = the manifest's signature validated against a key served on the domain. 'dns_txt' = an ojcp-registry-verification TXT record was present."
+        },
+        "verified_at": { "type": "string", "format": "date" }
+      }
+    },
+    "industries": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional industry tags for find_ojcp_providers filtering."
+    },
+    "has_agent_apply": {
+      "type": "boolean",
+      "description": "Whether any apply_path supports agent submission."
+    },
+    "attestations": {
+      "type": "array",
+      "description": "Third-party legitimacy attestations (decentralization hook — empty during bootstrap; future issuers e.g. ATS vendors, KYB providers).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["issuer", "type"],
+        "properties": {
+          "issuer": { "type": "string" },
+          "type": { "type": "string" },
+          "evidence_url": { "type": "string", "format": "uri" },
+          "issued_at": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "added_at": { "type": "string", "format": "date" },
+    "tier_history": {
+      "type": "array",
+      "description": "Append-only log of tier changes (git history is the primary audit trail; this mirrors it in-record).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tier", "date"],
+        "properties": {
+          "tier": { "type": "string", "enum": ["unverified", "verified", "audited"] },
+          "date": { "type": "string", "format": "date" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

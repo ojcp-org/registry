@@ -1,0 +1,14 @@
+{
+  "domain": "ojcp.dev",
+  "name": "OJCP Reference Provider",
+  "manifest_url": "https://ojcp.dev/.well-known/ojcp.json",
+  "trust_tier": "unverified",
+  "manifest_signed": false,
+  "industries": ["reference"],
+  "has_agent_apply": true,
+  "attestations": [],
+  "added_at": "2026-08-10",
+  "tier_history": [
+    { "tier": "unverified", "date": "2026-08-10", "note": "Reference provider; seed entry." }
+  ]
+}

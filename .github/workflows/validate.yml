@@ -1,0 +1,35 @@
+name: validate-registry
+
+on:
+  pull_request:
+    paths:
+      - "providers/**"
+      - "schema/**"
+      - "src/**"
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Validate entries (schema + live manifest + domain control)
+        run: pnpm validate
+      - name: Build registry.json index
+        run: pnpm build
+      - name: Upload index artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: registry-json
+          path: registry.json
