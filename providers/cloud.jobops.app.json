@@ -1,0 +1,13 @@
+{
+  "domain": "cloud.jobops.app",
+  "name": "JobOps",
+  "manifest_url": "https://cloud.jobops.app/.well-known/ojcp.json",
+  "trust_tier": "unverified",
+  "manifest_signed": false,
+  "has_agent_apply": false,
+  "attestations": [],
+  "added_at": "2026-10-13",
+  "tier_history": [
+    { "tier": "unverified", "date": "2026-10-13", "note": "Initial listing. Read-only provider (search_jobs, get_job_detail). Conformance 8/9: jobLocation is returned as a plain string rather than a Place. The manifest's mcp_endpoint uses http:// (it redirects to https; the spec requires https)." }
+  ]
+}

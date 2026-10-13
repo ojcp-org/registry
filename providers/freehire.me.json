@@ -1,0 +1,13 @@
+{
+  "domain": "freehire.me",
+  "name": "freehire",
+  "manifest_url": "https://freehire.me/.well-known/ojcp.json",
+  "trust_tier": "unverified",
+  "manifest_signed": false,
+  "has_agent_apply": false,
+  "attestations": [],
+  "added_at": "2026-10-13",
+  "tier_history": [
+    { "tier": "unverified", "date": "2026-10-13", "note": "Initial listing. Open-source job aggregator; read-only provider (search_jobs, get_job_detail, get_employer_context); passes the conformance suite 9/9." }
+  ]
+}
