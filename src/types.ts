@@ -32,9 +32,46 @@ export interface RegistryEntry {
   tier_history?: TierChange[];
 }
 
+export interface ManifestSnapshot {
+  ojcp_version: string;
+  name: string;
+  description?: string;
+  mcp_endpoint?: string;
+  tools: string[];
+  apply_paths: string[];
+  auth_required: boolean;
+  signed: boolean;
+}
+
+export interface ConformanceCheck {
+  test: string;
+  status: "passed" | "failed" | "skipped";
+  message?: string;
+}
+
+export interface ConformanceSummary {
+  suite_version: string;
+  passed: number;
+  failed: number;
+  skipped: number;
+  results: ConformanceCheck[];
+}
+
+/** Live evidence gathered when the index is built; absent in offline builds. */
+export interface ProviderHealth {
+  checked_at: string;
+  manifest: ManifestSnapshot | null;
+  manifest_error?: string;
+  conformance: ConformanceSummary | null;
+}
+
+export interface IndexedProvider extends RegistryEntry {
+  health?: ProviderHealth;
+}
+
 export interface RegistryIndex {
   ojcp_registry_version: string;
-  generated_from: string;
+  generated_at: string;
   count: number;
-  providers: RegistryEntry[];
+  providers: IndexedProvider[];
 }
