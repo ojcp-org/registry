@@ -27,7 +27,8 @@ Tiers follow the [Registry Trust Tiers](https://spec.ojcp.dev/0.1/#trust-tiers) 
 3. CI validates: schema, that the live manifest fetches and has the required fields, and — for any
    tier above `unverified` — that **domain control** is proven.
 
-The [ojcp.dev registry page](https://ojcp.dev) can pre-fill this PR for you.
+The [ojcp.dev registry page](https://ojcp.dev/registry) checks your manifest and opens this PR
+for you, pre-filled.
 
 ### Proving domain control (required above `unverified`)
 
@@ -45,13 +46,29 @@ This is what stops anyone from listing a domain they don't control.
 pnpm install
 pnpm validate          # schema + live manifest + domain control
 pnpm validate:offline  # schema only (no network)
-pnpm build             # generate registry.json
+pnpm build             # generate registry.json from the entries
+pnpm build:health      # same, plus live evidence for every provider (network)
 ```
 
 ## Consuming the registry
 
-CI builds `providers/*.json` into a single `registry.json`. Agents and the `find_ojcp_providers`
-tool read that index; they never depend on this repo's internal file layout.
+The index is published at **<https://ojcp-org.github.io/registry/registry.json>** on every
+change to `main` and nightly. Agents, ojcp.dev and the `find_ojcp_providers` tool read that
+index; they never depend on this repo's internal file layout.
+
+Each provider in the published index is its entry, verbatim, plus a `health` object with
+evidence gathered at build time:
+
+- `manifest`: a snapshot of the live manifest (OJCP version, name, description, MCP endpoint,
+  tools, apply paths, whether auth is required, whether it is signed), or `null` with a
+  `manifest_error` if it couldn't be fetched;
+- `conformance`: the result of running the
+  [conformance suite](https://github.com/ojcp-org/conformance) against the provider, check by
+  check;
+- `checked_at`: when the evidence was gathered.
+
+Evidence is reported, not judged: a failed check doesn't change a provider's `trust_tier` or
+remove its listing. Consumers decide what to do with it.
 
 ## Governance
 
