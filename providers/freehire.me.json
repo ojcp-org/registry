@@ -3,16 +3,13 @@
   "name": "freehire",
   "manifest_url": "https://freehire.me/.well-known/ojcp.json",
   "trust_tier": "unverified",
-  "manifest_signed": false,
+  "manifest_signed": true,
+  "domain_control": { "method": "signed_manifest", "verified_at": "2026-10-13" },
   "industries": ["technology", "software", "it"],
   "has_agent_apply": false,
   "attestations": [],
-  "added_at": "2026-09-17",
+  "added_at": "2026-10-13",
   "tier_history": [
-    {
-      "tier": "unverified",
-      "date": "2026-09-17",
-      "note": "Read provider: search_jobs, get_job_detail and get_employer_context over both REST and MCP. Conformance suite passes 9/9. Agent-initiated application is not implemented, hence has_agent_apply false."
-    }
+    { "tier": "unverified", "date": "2026-10-13", "note": "Initial listing. Open-source job aggregator; read-only provider (search_jobs, get_job_detail, get_employer_context); passes the conformance suite 9/9." }
   ]
 }

@@ -1,0 +1,51 @@
+name: publish-index
+
+# Publishes registry.json, with live evidence for every provider (manifest
+# snapshot + conformance run), to GitHub Pages. Runs on every change to main
+# and nightly so the evidence stays current.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - name: Build registry.json with live evidence
+        run: pnpm build:health --out _site/registry.json
+      - name: Publish the entry schema alongside the index
+        run: mkdir -p _site/schema && cp schema/registry-entry.schema.json _site/schema/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}registry.json
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
