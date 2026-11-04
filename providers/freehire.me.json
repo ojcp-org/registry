@@ -5,6 +5,7 @@
   "trust_tier": "unverified",
   "manifest_signed": true,
   "domain_control": { "method": "signed_manifest", "verified_at": "2026-10-13" },
+  "industries": ["technology", "software", "it"],
   "has_agent_apply": false,
   "attestations": [],
   "added_at": "2026-10-13",
