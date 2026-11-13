@@ -3,12 +3,13 @@
   "name": "JobSnap",
   "manifest_url": "https://job-snap.co.uk/.well-known/ojcp.json",
   "trust_tier": "unverified",
-  "manifest_signed": false,
+  "manifest_signed": true,
+  "domain_control": { "method": "dns_txt", "verified_at": "2026-11-13" },
   "industries": ["defence", "aerospace", "security"],
   "has_agent_apply": false,
   "attestations": [],
   "added_at": "2026-11-13",
   "tier_history": [
-    { "tier": "unverified", "date": "2026-11-13", "note": "Initial listing. Anonymous read-only provider of UK and international defence and aerospace jobs (search_jobs, get_job_detail, get_employer_context, begin_application as an apply-link redirect, and jobsnap:application_brief). Applications are made on the employer's own page. Rate limit declared in the manifest." }
+    { "tier": "unverified", "date": "2026-11-13", "note": "Initial listing. Anonymous read-only provider of UK and international defence and aerospace jobs (search_jobs, get_job_detail, get_employer_context, begin_application as an apply-link redirect, and jobsnap:application_brief). Applications are made on the employer's own page. ES256-signed manifest with keys at /.well-known/ojcp-keys.json; domain control by DNS TXT (ojcp-registry-verification). Rate limit declared in the manifest. Requesting review for the verified tier." }
   ]
 }
