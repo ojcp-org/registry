@@ -1,0 +1,14 @@
+{
+  "domain": "job-snap.co.uk",
+  "name": "JobSnap",
+  "manifest_url": "https://job-snap.co.uk/.well-known/ojcp.json",
+  "trust_tier": "unverified",
+  "manifest_signed": false,
+  "industries": ["defence", "aerospace", "security"],
+  "has_agent_apply": false,
+  "attestations": [],
+  "added_at": "2026-11-13",
+  "tier_history": [
+    { "tier": "unverified", "date": "2026-11-13", "note": "Initial listing. Anonymous read-only provider of UK and international defence and aerospace jobs (search_jobs, get_job_detail, get_employer_context, begin_application as an apply-link redirect, and jobsnap:application_brief). Applications are made on the employer's own page. Rate limit declared in the manifest." }
+  ]
+}
